@@ -1,0 +1,66 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<ui:decorate xmlns="http://www.w3.org/1999/xhtml"
+             xmlns:h="http://xmlns.jcp.org/jsf/html"
+             xmlns:p="http://primefaces.org/ui"
+             xmlns:f="http://xmlns.jcp.org/jsf/core"
+             xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+             template="templete.xhtml">
+    <h:head>
+        <title>Facelet Title</title>
+    </h:head>
+    <ui:define name="metadata">
+        <f:metadata>
+            <f:event listener="#{agendamentoBeans.prepararPesquisa()}" type="preRenderView"></f:event>
+        </f:metadata>
+
+
+    </ui:define>
+
+    <ui:define name="conteudo">  
+
+        <h:form>
+            <p:toolbar>
+                <f:facet name="left">
+                    <h:outputText value="Agendamento" />
+                </f:facet>
+            </p:toolbar>
+
+            <h:panelGrid columns="4">
+                <p:outputLabel value="Adicione um novo Agendamento! "/>
+                <p:button value="Novo" outcome="Agendamento.xhtml" />
+                <f:param name="proacao" value="Novo" />
+            </h:panelGrid>
+
+
+            <p:dataTable emptyMessage="Nenhum Registro Cadastrado" value="#{agendamentoBeans.itens}"
+                         filteredValue="#{agendamentoBeans.itensFiltrados}"
+                         var="agendamento"
+                         rows="6"
+                         paginator="true"
+                         >
+                <p:column headerText="Código">
+                    <h:outputText value="#{agendamento.codigoAgendamento}" />
+                </p:column>
+                <p:column headerText="Data" filterBy="#{agendamento.dataAgenda}" sortBy="#{agendamento.dataAgenda}">
+                    <h:outputText value="#{agendamento.dataAgenda}" />
+                </p:column>
+                <p:column headerText="Cliente" filterBy="#{MBAnimais.animais.clienteidCliente}" sortBy="#{MBAnimais.animais.clienteidCliente}">
+                    <h:outputText value="#{MBAnimais.animais.clienteidCliente}" />
+                </p:column>
+
+                <p:column headerText="Opções">
+                    <p:button icon="ui-icon-pencil" outcome="Agendamento.xhtml" >
+                        <f:param name="procod" value="#{agendamento.codigoAgendamento}" />
+                        <f:param name="proacao" value="Editar" />
+                    </p:button>
+                    <p:button icon="ui-icon-trash" outcome="Agendamento.xhtml" >
+                        <f:param name="procod" value="#{agendamento.codigoAgendamento}"  />
+                        <f:param name="proacao" value="excluir" />
+                    </p:button>
+                </p:column>
+            </p:dataTable>
+        </h:form>
+    </ui:define>
+</ui:decorate>
+

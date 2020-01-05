@@ -1,0 +1,59 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<ui:decorate xmlns="http://www.w3.org/1999/xhtml"
+             xmlns:h="http://xmlns.jcp.org/jsf/html"
+             xmlns:p="http://primefaces.org/ui"
+             xmlns:f="http://xmlns.jcp.org/jsf/core"
+             template="templete.xhtml"
+             xmlns:ui="http://xmlns.jcp.org/jsf/facelets">
+
+
+    <h:head>
+        <title>Facelet Title</title>
+    </h:head>
+    <ui:define name="metadata">
+        <f:metadata>
+            <f:viewParam name="proacao" value="#{MBEndereco.acao}" />
+            <f:viewParam name="procod" value="#{MBEndereco.codigo}" />
+            <f:event listener="#{MBEndereco.carregarCadastro()}" type="preRenderView"></f:event>
+        </f:metadata>
+    </ui:define>
+
+
+
+    <ui:define name="conteudo">
+        <h:form id="frmproca">
+            <p:toolbar>
+                <f:facet name="Left">
+                    <h:outputText value="Endereço"></h:outputText>
+                </f:facet>
+            </p:toolbar>
+
+
+            <p:panelGrid columns="2" id="pnproca">
+                <p:outputLabel value="Código:"/>
+                <p:inputText maxlength="20" size="30" value="#{MBEndereco.endereco.codigoEndereco}"/>
+                <p:outputLabel value="Cidade"/>
+                <p:inputText maxlength="20" size="30" value="#{MBEndereco.endereco.cidade}"/>
+                <p:outputLabel value="Bairro:"/>
+                <p:inputText maxlength="20" size="30" value="#{MBEndereco.endereco.bairro}"/>
+                <p:outputLabel value="Rua:"/>
+                <p:inputText maxlength="20" size="30" value="#{MBEndereco.endereco.rua}"/>
+                <p:outputLabel value="Lote:"/>
+                <p:inputText maxlength="20" size="30" value="#{MBEndereco.endereco.numero}"/> 
+            </p:panelGrid>
+            <p:panelGrid columns="3">
+                <p:commandButton value="Novo" actionListener="#{MBEndereco.novo()}"
+                                 update=" :frmproca:pnproca"/>
+                <p:commandButton value="Salvar" actionListener="#{MBEndereco.salvar()}"
+                                 update=":msgGlobal :frmproca:pnproca"/>
+                <p:commandButton  value="Excluir" actionListener="#{MBEndereco.editar()}"
+                                  update=":msgGlobal"/>
+                <p:commandButton  value="Excluir" actionListener="#{MBEndereco.excluir()}"
+                                  update=":msgGlobal"/>
+                <p:button value="Voltar" outcome="templete.xhtml" />
+            </p:panelGrid>
+        </h:form>
+    </ui:define>
+
+</ui:decorate>

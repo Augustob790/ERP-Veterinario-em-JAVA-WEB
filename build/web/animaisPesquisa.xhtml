@@ -1,0 +1,62 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<ui:decorate xmlns="http://www.w3.org/1999/xhtml"
+             xmlns:h="http://xmlns.jcp.org/jsf/html"
+             xmlns:p="http://primefaces.org/ui"
+             xmlns:f="http://xmlns.jcp.org/jsf/core"
+             xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+             template="templete.xhtml">
+    <h:head>
+        <title>Facelet Title</title>
+    </h:head>
+    <ui:define name="metadata">
+        <f:metadata>
+            <f:event listener="#{MBAnimais.prepararPesquisa()}" type="preRenderView"></f:event>
+        </f:metadata>
+    </ui:define>
+
+    <ui:define name="conteudo">  
+
+        <h:form>
+            <p:toolbar>
+                <f:facet name="left">
+                    <h:outputText value="Animais" />
+                </f:facet>
+            </p:toolbar>
+
+            <h:panelGrid columns="4">
+                <p:outputLabel value="Adicione um novo Animal! "/>
+                <p:button value="Novo" outcome="animaisCadastro.xhtml" />
+                <f:param name="proacao" value="Novo" />
+            </h:panelGrid>
+
+            <p:dataTable emptyMessage="Nenhum Registro Cadastrado" value="#{MBAnimais.itens}"
+                         filteredValue="#{MBAnimais.itensFiltrados}"
+                         var="animais"
+                         rows="6"
+                         paginator="true"
+                         >
+                <p:column headerText="Código">
+                    <h:outputText value="#{animais.codigoAnimais}" />
+                </p:column>
+                <p:column headerText="Nome" filterBy="#{animais.nome}" sortBy="#{animais.nome}">
+                    <h:outputText value="#{animais.nome}" />
+                </p:column>
+                <p:column headerText="Idade" filterBy="#{animais.idade}" sortBy="#{animais.idade}">
+                    <h:outputText value="#{animais.idade}" />
+                </p:column>
+                <p:column headerText="Opções">
+                    <p:button icon="ui-icon-pencil" outcome="animaisCadastro.xhtml" >
+                        <f:param name="procod" value="#{animais.codigoAnimais}" />
+                        <f:param name="proacao" value="Editar" />
+                    </p:button>
+                    <p:button icon="ui-icon-trash" outcome="animaisCadastro.xhtml" >
+                        <f:param name="procod" value="#{animais.codigoAnimais}"  />
+                        <f:param name="proacao" value="Excluir" />
+                    </p:button>
+                </p:column>
+            </p:dataTable>
+        </h:form>
+    </ui:define>
+</ui:decorate>
+

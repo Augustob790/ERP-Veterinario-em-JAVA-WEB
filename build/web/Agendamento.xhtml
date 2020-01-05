@@ -1,0 +1,116 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<ui:decorate xmlns="http://www.w3.org/1999/xhtml"
+             xmlns:h="http://xmlns.jcp.org/jsf/html"
+             xmlns:p="http://primefaces.org/ui"
+             xmlns:f="http://xmlns.jcp.org/jsf/core"
+             template="templete.xhtml"
+             xmlns:ui="http://xmlns.jcp.org/jsf/facelets">
+
+
+    <h:head>
+        <title>Facelet Title</title>
+    </h:head>
+    <ui:define name="metadata">
+        <f:metadata>
+            <f:viewParam name="proacao" value="#{agendamentoBeans.acao}" />
+            <f:viewParam name="procod" value="#{agendamentoBeans.codigo}" />
+            <f:event listener="#{agendamentoBeans.carregarCadastro()}" type="preRenderView"></f:event>
+        </f:metadata>
+    </ui:define>
+
+
+
+    <ui:define name="conteudo">
+        <h:form id="frmproca">
+            <p:toolbar>
+                <f:facet name="Left">
+                    <h:outputText value="Agendamento"></h:outputText>
+                </f:facet>
+            </p:toolbar>
+
+
+            <p:panelGrid columns="2" id="pnproca">
+                <p:outputLabel value="Código:"/>
+                <p:inputText maxlength="20" size="30" value="#{agendamentoBeans.agendamento.codigoAgendamento}"/>
+                <p:outputLabel value="Data"></p:outputLabel> 
+                <p:calendar id="Data" value="#{agendamentoBeans.agendamento.dataAgenda}"></p:calendar>
+                <p:outputLabel value="Descrição:" />
+                <p:inputText maxlength="50" size="30" value= "#{agendamentoBeans.agendamento.descricaoAgendamento}"/>
+
+                <p:outputLabel value="Nome Cliente :" />
+                <p:selectOneMenu  
+                    value="#{agendamentoBeans.agendamento.clienteidCliente}" 
+                    converter="clienteConverter"
+                    required="true">
+                    <f:selectItem 
+                        itemValue=" " 
+                        itemLabel="Selecione o Cliente" />
+                    <f:selectItems 
+                        value="#{agendamentoBeans.listaClientes}"
+                        var="cliente"
+                        itemValue="#{cliente}" 
+                        itemLabel="#{cliente.nome}" />
+                    <f:validateBean />
+                </p:selectOneMenu> 
+
+                <p:outputLabel value="Animal: " />
+                <p:selectOneMenu  
+                    converter="animaisConverter"
+                    required="true">
+                    <f:selectItem 
+                        itemValue=" " 
+                        itemLabel="Selecione o Aninal" />
+                    <f:selectItems 
+                        value="#{agendamentoBeans.listaAnimais}"
+                        var="animais"
+                        itemValue="#{animais}" 
+                        itemLabel="#{animais.nome}" />
+                    <f:validateBean />
+                </p:selectOneMenu> 
+
+                <p:outputLabel value="Serviço:" />
+                <p:selectOneMenu  
+                    converter="servicoConverter"
+                    required="true">
+                    <f:selectItem 
+                        itemValue=" " 
+                        itemLabel="Selecione o serviço" />
+                    <f:selectItems 
+                        value="#{agendamentoBeans.listaServico}"
+                        var="servico"
+                        itemValue="#{servico}" 
+                        itemLabel="#{servico.nomeServico}" />
+                    <f:validateBean />
+                </p:selectOneMenu> 
+
+                <p:outputLabel value="Funcionario: " />
+                <p:selectOneMenu  
+                    value="#{agendamentoBeans.agendamento.funcionarioidFuncionario}" 
+                    converter="funcioanrioConverter"
+                    required="true">
+                    <f:selectItem 
+                        itemValue=" " 
+                        itemLabel="Selecione o funcionario" />
+                    <f:selectItems 
+                        value="#{agendamentoBeans.listaFuncionario}"
+                        var="func"
+                        itemValue="#{func}" 
+                        itemLabel="#{func.nome}" />
+                    <f:validateBean />
+                </p:selectOneMenu> 
+            </p:panelGrid>
+             <h:panelGrid columns="5">
+                    <p:commandButton value="Novo" actionListener="#{agendamentoBeans.novo()}" update=" :frmproca:pnproca"   />
+                    <p:commandButton value="Salvar" actionListener="#{agendamentoBeans.salvar()}" 
+                                     update=":msgGlobal :frmproca:pnproca" />
+                    <p:commandButton value="Excluir" actionListener="#{agendamentoBeans.excluir()}" 
+                                     update=":msgGlobal" />
+                    <p:commandButton value="Editar"  actionListener="#{agendamentoBeans.editar()}" 
+                                     update=":msgGlobal" />
+                    <p:button value="Voltar" outcome="templete.xhtml" />
+                </h:panelGrid>
+        </h:form>
+    </ui:define>
+
+</ui:decorate>
